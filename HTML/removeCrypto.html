@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Remove Crypto</title>
+</head>
+<body>
+
+<h1>Remove Crypto</h1>
+<p>Use this to remove cryptocurrency to your portfolio</p>
+<! –– <form action="http://136.34.236.246:8091/removecrypto?name=" + name + "&qty=" + qty" method="get" target="hiddenFrame">
+<form id="myForm" onsubmit="return renderMe()">
+
+  <label for="fname">Crypto:</label>
+  <input type="text" id="name" name="name"><br><br>
+  <label for="lname">Quantity:</label>
+  <input type="text" id="qty" name="qty"><br><br>
+  <input onclick="window.location.href = './index.html';" type="submit" value="Submit" /> 
+  <!--<input type="submit" value="Submit" /> -->
+</form>
+
+<br><a href="http://investments.combsmanor.com/index.html"> Back to the Menu</a></br>
+
+
+
+<script>
+async function fetchMe() {
+  var form = new FormData(document.getElementById("myForm"));
+  var data = new URLSearchParams(form).toString();
+  try {
+    const response = await fetch("http://136.34.236.246:8091/removecrypto?" + data, {
+      method:"GET",
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    })
+    const resp = await response.text();
+    if (resp.includes("error")) { return "Please verify the data you entered.";}
+    return resp;
+
+
+  } catch (error) {
+      console.log("Failed");
+      console.error(error);
+  }
+}
+  
+async function renderMe() {
+  const resp = await fetchMe();
+  console.log(resp);
+  alert(resp);
+}
+
+</script>
+
+
+</body>
+</html>

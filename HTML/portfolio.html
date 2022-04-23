@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Portfolio</title>
+   </head>
+   <body>
+      <h1>Portfolio</h1>
+      <p>This is a summary of your portfolio:</p>
+      <br></br>
+      <link rel="stylesheet"
+         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+         crossorigin="anonymous">
+      <style>
+         th {
+         color: #fff;
+         }
+      </style>
+      <table class="table table-striped">
+         <tr class="bg-info">
+            <th>Name</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+         </tr>
+         <tbody id="myTable">
+         </tbody>
+      </table>
+      <script>
+         async function fetchMe() {
+              try {
+              		const response = await fetch('http://136.34.236.246:8091/portfolio', {
+                  //const response = await fetch('http://localhost:8091/portfolio', {
+          	        method:"GET",
+          	        headers: {
+          	                "Content-Type": "application/json",
+          	             },
+          	       })
+                  const resp = await response.json();
+
+                  return resp;
+              } catch (error) {
+                  console.error(error);
+              }
+          }
+         
+          
+         async function renderMe() {
+              const resp = await fetchMe();
+              console.log(resp);
+              buildTable(resp);
+              
+         }
+         
+         renderMe();
+         
+         function buildTable(data){
+         var table = document.getElementById('myTable')
+         
+         let dollarUS = Intl.NumberFormat("en-US", {
+         			style: "currency",
+         			currency: "USD",
+         });
+         var gTotal = 0;
+         for (var i = 0; i < data.length; i++){
+         var row = `<tr>
+         				<td>${data[i].name}</td>
+         				<td>${data[i].type}</td>
+         				<td>${data[i].qty}</td>
+         				<td>${dollarUS.format(data[i].price)}</td>
+         				<td>${dollarUS.format(data[i].total)}</td>
+         		  </tr>`
+         table.innerHTML += row
+         gTotal += parseFloat(data[i].total);
+         
+         }
+         var row = `<tr>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>Grand Total</td>
+         <td>${dollarUS.format(gTotal)}</td>
+         </tr>`
+         table.innerHTML += row
+         }
+         
+      </script>
+      <a
+         href=".\index.html">
+      Back to the Menu</a>
+   </body>
+</html>
