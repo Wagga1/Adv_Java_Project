@@ -25,7 +25,7 @@ public class Investments {
 	int count = 0;
 
 	public static void main(String[] args) throws IOException, InterruptedException, NumberFormatException,
-			SQLException, InvalidDataException, ParseException {
+			SQLException, ParseException {
 
 		while (true) {
 			// Menu:
@@ -123,8 +123,6 @@ public class Investments {
 					Crypto crypto = new Crypto(name, qty);
 					String s = removeCrypto(name, qty);
 					System.out.println(s);
-				} catch (InvalidDataException e) {
-					System.out.println("failed to build crypto");
 				} catch (NumberFormatException e) {
 					System.out.println("");
 					System.out.println("Please only submit numbers for the quantity.");
@@ -180,7 +178,7 @@ public class Investments {
 	}
 
 	public static void printPortfolio(String str)
-			throws ParseException, InvalidDataException, IOException, InterruptedException {
+			throws ParseException, IOException, InterruptedException {
 		double gTotal = 0;
 
 		// Print out portfolio header
@@ -206,7 +204,7 @@ public class Investments {
 		System.out.println("-".repeat(62));
 	}
 
-	public static Crypto[] cryptoParser() throws InvalidDataException, IOException {
+	public static Crypto[] cryptoParser() throws IOException {
 		int j = 0; // used to count records
 		int k = 0; // used to cycle through the records to create objects
 		final String SELECT_QUERY = "SELECT * FROM cryptos";
@@ -256,7 +254,7 @@ public class Investments {
 		return obj;
 	}
 
-	public static Stock[] stockParser() throws InvalidDataException, IOException {
+	public static Stock[] stockParser() throws IOException {
 		String name;
 		String type;
 		int j = 0; // used to count records
